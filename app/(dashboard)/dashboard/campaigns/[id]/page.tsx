@@ -116,7 +116,7 @@ async function CampaignDetailContent({ campaignId }: { campaignId: string }) {
         .eq('is_active', true)
       const accounts = (userKeys || [])
         .map(uk => Array.isArray(uk.vapi_accounts) ? uk.vapi_accounts[0] : uk.vapi_accounts)
-        .filter((a): a is { id: string; api_key: string } => !!a && (a as any).is_active)
+        .filter((a): a is { id: string; api_key: string; is_active: boolean } => !!a && (a as any).is_active)
       const apiKeyMap = new Map(accounts.map(a => [a.id, a.api_key]))
 
       await Promise.allSettled(
