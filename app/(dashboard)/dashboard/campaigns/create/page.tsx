@@ -94,7 +94,7 @@ export default function CreateCampaignPage() {
             .select('id, name')
             .eq('user_id', user.id)
             .order('created_at', { ascending: false })
-          aRes = { ...fb, count: null, status: 200 as const, statusText: 'OK' }
+          aRes = { ...fb, count: null, status: 200 as const, statusText: 'OK' } as any
         }
         setAssistants((aRes.data as AssistantRow[]) || [])
 

@@ -156,9 +156,9 @@ export async function POST() {
                 subscription_id: subscription?.id || null,
                 vapi_account_id: key.id,
                 campaign_item_id: (item as any)?.id || null,
+                ...record,
                 customer_name: record.customer_name || (item as any)?.customer_name || null,
                 customer_number: record.customer_number || (item as any)?.customer_phone || null,
-                ...record,
               })
 
             if (record.duration_seconds > 0 && vapiCall.status === 'ended') {

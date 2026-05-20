@@ -13,13 +13,16 @@ import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { Billing } from '@/lib/billing'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2024-12-18.acacia',
-})
+function getStripe() {
+  return new Stripe(process.env.STRIPE_SECRET_KEY || '', {
+    apiVersion: '2026-01-28.clover' as any,
+  })
+}
 
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || ''
 
 export async function POST(request: Request) {
+  const stripe = getStripe()
   try {
     const body = await request.text()
     const signature = request.headers.get('stripe-signature')!

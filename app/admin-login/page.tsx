@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -16,6 +16,14 @@ import { AlertCircle, Lock } from 'lucide-react'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 
 export default function AdminLoginPage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Yükleniyor...</div>}>
+      <AdminLoginContent />
+    </Suspense>
+  )
+}
+
+function AdminLoginContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [password, setPassword] = useState('')

@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
 
     const { data: { user }, error } = await supabase.auth.admin.getUserById(id)
 
-    if (error) throw error
+    if (error || !user) throw error || new Error('User not found')
 
     return NextResponse.json({ 
       success: true, 

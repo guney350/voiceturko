@@ -192,7 +192,7 @@ export class MinuteTracker {
       await supabase.from('usages').insert({
         user_id: userId,
         subscription_id: subscription.id,
-        call_id: callRecord.id,
+        call_id: callRecord?.id,
         cost: minutesDeducted,
       })
     }
@@ -223,7 +223,7 @@ export class MinuteTracker {
     console.log(`[MinuteTracker] User ${userId}: ${minutesDeducted} dk düşüldü, kalan: ${remainingMinutes} dk`)
     
     return {
-      callId: callRecord.id,
+      callId: callRecord?.id || '',
       minutesDeducted,
       remainingMinutes,
     }

@@ -7,11 +7,14 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2024-12-18.acacia',
-})
+function getStripe() {
+  return new Stripe(process.env.STRIPE_SECRET_KEY || '', {
+    apiVersion: '2026-01-28.clover' as any,
+  })
+}
 
 export async function POST(request: Request) {
+  const stripe = getStripe()
   try {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()

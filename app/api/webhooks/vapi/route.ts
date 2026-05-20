@@ -69,7 +69,7 @@ export async function POST(request: Request) {
           .maybeSingle()
 
         if (item?.campaigns) {
-          const campaign = item.campaigns as Record<string, unknown>
+          const campaign = item.campaigns as unknown as Record<string, unknown>
           await CampaignProcessor.tick(item.campaign_id, campaign.user_id as string).catch(err => {
             console.error('[Webhook] Tick hatası:', err)
           })
