@@ -51,7 +51,8 @@ export class OxapayClient {
     try {
       // Oxapay TRY desteklemiyor olabilir - kontrol için USD'ye çevirelim
       // (sabit kur 1$ = 40₺ varsayımıyla; production'da gerçek kur API'si gerekli)
-      const usdAmount = params.currency === 'USD' ? params.amount : params.amount / 40
+      const usdTryRate = parseInt(process.env.USD_TRY_RATE || '45', 10)
+      const usdAmount = params.currency === 'USD' ? params.amount : params.amount / usdTryRate
 
       const res = await fetch(`${OXAPAY_BASE_URL}/request`, {
         method: 'POST',

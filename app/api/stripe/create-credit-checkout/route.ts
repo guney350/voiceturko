@@ -1,10 +1,15 @@
 /**
  * Stripe Checkout: Kredi Yükleme (TL)
+ * Akış: VoiceTurko → Caventra LLC Payment Page → Stripe Checkout
  */
 
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
+
+const CAVENTRA_PAYMENT_URL = 'https://caventrallc.com/payment'
+const CAVENTRA_BRAND = 'Caventra LLC'
+const CAVENTRA_STMT = 'CAVENTRAL LLC'
 
 function getStripe() {
   return new Stripe(process.env.STRIPE_SECRET_KEY || '', {
@@ -43,14 +48,17 @@ export async function POST(request: Request) {
           price_data: {
             currency: 'try',
             product_data: {
-              name: 'Kredi Yüklemesi',
-              description: `${parsedAmount.toFixed(2)}₺ kredi yüklemesi`,
+              name: `${CAVENTRA_BRAND} - Account Credit`,
+              description: 'Digital service credit top-up',
             },
             unit_amount: Math.round(parsedAmount * 100),
           },
           quantity: 1,
         },
       ],
+      payment_intent_data: {
+        statement_descriptor: CAVENTRA_STMT,
+      },
       customer_email: user.email,
       success_url: `${appUrl}/dashboard/credits?success=true`,
       cancel_url: `${appUrl}/dashboard/credits?cancelled=true`,
@@ -58,10 +66,13 @@ export async function POST(request: Request) {
         purpose: 'credit_topup',
         user_id: user.id,
         amount: parsedAmount.toString(),
+        source: 'voiceturko',
       },
     })
 
-    return NextResponse.json({ url: session.url })
+    const paymentPageUrl = `${CAVENTRA_PAYMENT_URL}?s=${encodeURIComponent(session.url!)}&amount=${parsedAmount}`
+
+    return NextResponse.json({ url: paymentPageUrl })
   } catch (error: unknown) {
     const msg = error instanceof Error ? error.message : 'Unknown'
     console.error('[Stripe] Credit checkout hatası:', msg)
