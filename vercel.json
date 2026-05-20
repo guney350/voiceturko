@@ -1,21 +1,3 @@
 {
-  "regions": ["fra1"],
-  "crons": [
-    {
-      "path": "/api/cron/campaign-watchdog",
-      "schedule": "* * * * *"
-    },
-    {
-      "path": "/api/cron/key-rotation",
-      "schedule": "*/5 * * * *"
-    },
-    {
-      "path": "/api/cron/spending-sync",
-      "schedule": "*/15 * * * *"
-    },
-    {
-      "path": "/api/cron/cleanup-old-data",
-      "schedule": "0 3 * * *"
-    }
-  ]
+  "regions": ["fra1"]
 }
