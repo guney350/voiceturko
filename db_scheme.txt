@@ -1,0 +1,181 @@
+altyapı olarak supabase kullanacağız. yani aslında users kısmına supabase in default değerlerini yazacağım
+
+users | tablo
+
+UID | uuid
+Display name | name değeri 
+Email | mail değeri 
+Phone | bu tabloda var ama bizim bununla işimiz yok kullanmayacağız
+Providers | Email ya da Google çünkü google ile giriş de istiyoruz
+Provider type | veri girmeyeceğiz
+Created at 
+Last sign in at
+
+bak şimdi bu supabase auth da var olan varsayılan users tablosu biz diğer tablolarda her zaman bu tablodaki user id değerini kullanacağız.
+
+-----
+
+plans | tablo
+
+id | UID 
+name | plan adı 
+price | fiyat 500|1000 gibi değerler 
+currency | para birimi örn TRY 
+included_minutes | örneğin 1000 ise 1000 yaz 5000 ise 5000
+is_active | true/false 
+created & updated at 
+
+-----
+
+subscriptions
+
+id | UID
+user_id | users dan alacağımız uid 
+plan_id | plans dan alacağımız uid 
+stripe_customer_id | stripe dan döner
+start_date | timestamp
+end_date | timestamp 
+status | active / canceled  
+current_period_start | timestamp
+current_period_end | timestamp 
+created_at 
+
+
+-----
+
+calls | tablo
+
+id | uid
+user_id | user tablosundan
+subscription_id | subscriptions tablosundan
+audio | filename koycaz
+transcript | long text
+analyze | long text
+duration_minutes | sayı girilecek buraya
+created_at
+
+-----
+
+usages
+
+id | uid
+user_id | users tablosundan alcaz 
+subscription_id | subscriptions tablosundan
+call_id | calls tablosundan 
+cost
+created_at
+
+
+-----
+
+assistant | tablo
+
+id | UID
+user_id | users tablosundan alcaz
+name | text (asistan adı)
+first_message_mode | assistant/user
+first_message | text
+system_prompt | text
+voice_id | id değeri ama içinde text de olabiliyor bu id değerinin
+ai_model | text (örn: gpt-4o) - kullanıcıdan gizli
+elevenlabs_voice_id | text (örn: pNInz6obpgDQGcFmaJgB) - kullanıcıdan gizli
+elevenlabs_model | text (örn: eleven_turbo_v2_5) - kullanıcıdan gizli
+created_at
+updated_at
+
+-----
+
+default_assistant_settings | tablo
+
+id | sabit UUID: a0000000-0000-0000-0000-000000000001
+ai_model | text (default: gpt-4o)
+elevenlabs_voice_id | text (default: pNInz6obpgDQGcFmaJgB)
+elevenlabs_model | text (default: eleven_turbo_v2_5)
+created_at
+updated_at
+
+NOT: Yeni asistan oluşturulurken otomatik olarak default_assistant_settings'teki değerler kullanılır
+
+-----
+
+sips | tablo 
+
+id | uid 
+user_id | users tablosundan çekeriz 
+name | text
+ip_adress | text 
+port | sayı
+username | text 
+password | text sakın hash yapma text kalmalı
+
+-----
+
+minute_pricing | tablo
+
+id | UID
+price_per_minute | dakika başı fiyat (örn: 10)
+currency | para birimi (TRY)
+is_active | true/false (sadece 1 tane active olmalı)
+created_at
+updated_at
+
+------
+
+minute_purchases | tablo
+
+id | UID
+user_id | users tablosundan
+subscription_id | subscriptions tablosundan (hangi aya ait)
+minutes_purchased | satın alınan dakika (örn: 154)
+price_per_minute | o anki fiyat (örn: 10)
+total_price | toplam tutar (154 x 10 = 1540 TRY)
+currency | para birimi
+stripe_payment_id | stripe ödeme referansı
+purchased_at | timestamp
+
+
+-----
+
+invoices | tablo
+
+id | UID
+user_id | users tablosundan
+subscription_id | subscriptions tablosundan (hangi aya ait)
+invoice_number | otomatik artan numara (örn: INV-2024-001)
+stripe_invoice_id | stripe'tan dönen fatura id
+amount | toplam tutar
+currency | para birimi (TRY)
+tax_amount | KDV tutarı
+status | paid / pending / failed / refunded
+invoice_date | timestamp
+due_date | timestamp
+paid_at | timestamp (ödendiyse)
+invoice_url | stripe fatura linki
+created_at
+
+-----
+
+api_keys | tablo
+
+id | UID
+user_id | users tablosundan
+key_name | kullanıcının verdiği isim (örn: "Production API")
+api_key | hash'lenmiş key değeri
+last_used_at | timestamp
+created_at
+updated_at
+
+-----
+
+audit_logs | tablo
+
+id | UID
+user_id | users tablosundan (opsiyonel, sistem işlemleri için null olabilir)
+action | ne yapıldı (örn: "user.login", "subscription.created", "call.deleted")
+resource_type | hangi tablo (örn: "subscriptions", "calls")
+resource_id | hangi kayıt
+ip_address | kullanıcının IP'si
+user_agent | tarayıcı bilgisi
+metadata | JSON (ek detaylar)
+status | success / failed
+created_at

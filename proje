@@ -1,0 +1,99 @@
+bak bu projenin çıkış amacını anlaman lazım öncelikle. bu proje vapi api keylerinin havuz sistemi 
+ile kullanıcılara hizmet sunduğu bir projedir
+
+bizim istediğimiz iş akışı şu şekildedir.
+
+admin kullanıcı api keyleri havuz sistemine ekler. 
+her api key varsayılan olarak 10 arama hakkına sahip olur
+
+----
+
+örnek kullanım senaryosu
+
+kullanıcılar sistemin vapi ile alakalı olduğundan haberdar olmamalılar.
+
+kullanıcı diyelim ki gitti yeni sip trunk ekledi. biz arkada vapi api keylerini kullanarak örneğin 1 tane vapi api keye bu sip
+numarasını ekleyeceğiz.
+
+sip trunk ve phone number ı vapiye ekleme kodunu aşağıda verdim.
+
+import requests
+
+VAPI_API_KEY = "478d61ff-1f9c-435a-9920-345d1f4ede78"
+BASE_URL = "https://api.vapi.ai"
+
+headers = {
+    "Authorization": f"Bearer {VAPI_API_KEY}",
+    "Content-Type": "application/json"
+}
+
+# :one: SIP TRUNK CREDENTIAL OLUŞTUR
+credential_payload = {
+    "provider": "byo-sip-trunk",
+    "name": "NetGSM SIP Trunk",
+    "gateways": [
+        {
+            "ip": "185.88.7.189",
+            "port": 5060,
+            "inboundEnabled": True
+        }
+    ],
+    "outboundLeadingPlusEnabled": True,
+    "outboundAuthenticationPlan": {
+        "authUsername": "3129113013",
+        "authPassword": "F9Z7hELKTa2U"
+    }
+}
+
+cred_resp = requests.post(
+    f"{BASE_URL}/credential",
+    headers=headers,
+    json=credential_payload
+)
+
+if cred_resp.status_code not in (200, 201):
+    print(":x: Credential hatası:", cred_resp.text)
+    raise SystemExit
+
+cred_data = cred_resp.json()
+credential_id = cred_data["id"]
+
+print(":white_check_mark: SIP Trunk Credential oluşturuldu")
+print(":id: Credential ID:", credential_id)
+
+
+# :two: AYNI ID İLE PHONE NUMBER EKLE
+phone_payload = {
+    "provider": "byo-phone-number",
+    "number": "+903129113013",
+    "numberE164CheckEnabled": True,
+    "credentialId": credential_id,
+    "name": "selam"
+}
+
+phone_resp = requests.post(
+    f"{BASE_URL}/phone-number",
+    headers=headers,
+    json=phone_payload
+)
+
+if phone_resp.status_code not in (200, 201):
+    print(":x: Phone Number hatası:", phone_resp.text)
+    raise SystemExit
+
+-------
+
+sonrasında bu kullanıcı bir asistan oluşturacak mesela bu asistanı da biz arkada vapiye ekleyeceğiz. 
+
+diyelim ki bu arkadaş 100 arama başlattı. her api keyin de 10 arama limiti var biliyoruz bunu. 1 api keyin limiti dolmaya yakın 
+havuzdan hemen başka bir api key alarak ona da aynı sip ekleme asistan ekleme işlemlerini yapıyoruz tabi ki bundan kullanıcının
+asla haberi olmamalı kesinlikle haberi olmamalı. ve hangi api keyi hangi kullanıcıya tanımladık ne kadar süresi kaldı bunları
+tutmamız gerekiyor. yapılan aramaların özetleri ve kaç dakika sürdüğünü de bilmemiz gerekiyor ki kullanıcının dakika hakkını 
+database den silebilelim.
+
+https://docs.vapi.ai/quickstart/introduction
+
+al bu vapi dökümanı 
+
+
+eksikler eklenebilecek şeyler varsa da sen eklersin kusursuz olmalı sistem.
