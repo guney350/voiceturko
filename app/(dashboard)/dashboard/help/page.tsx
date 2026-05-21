@@ -19,7 +19,7 @@ const SECTIONS = [
     items: [
       {
         q: 'Sıfırdan nasıl başlarım?',
-        a: 'Adım adım: 1) **Bakiye/Paket alın** (`/dashboard/credits` veya `/dashboard/packages`). Yeni kayıt olduğunuzda otomatik olarak 10 TL hoşgeldin kredisi tanımlanır. 2) **SIP bağlantısı ekleyin** (`/dashboard/sip`). SIP sağlayıcınızın bilgilerini (IP, port, kullanıcı adı, şifre, telefon) girersiniz. 3) **Yapay zeka asistanı oluşturun** (`/dashboard/assistant/new`). Hazır şablonlardan birini seçerek dakikalar içinde tamamlarsınız. 4) **Kampanya başlatın** (`/dashboard/campaigns/create`). Excel/CSV ile müşteri listesini yükleyip kampanyayı çalıştırırsınız.',
+        a: 'Adım adım: 1) **Bakiye/Paket alın** (`/dashboard/credits` veya `/dashboard/packages`). Yeni kayıt olduğunuzda otomatik olarak 500 TL hoşgeldin kredisi tanımlanır. 2) **SIP bağlantısı ekleyin** (`/dashboard/sip`). SIP sağlayıcınızın bilgilerini (IP, port, kullanıcı adı, şifre, telefon) girersiniz. 3) **Yapay zeka asistanı oluşturun** (`/dashboard/assistant/new`). Hazır şablonlardan birini seçerek dakikalar içinde tamamlarsınız. 4) **Kampanya başlatın** (`/dashboard/campaigns/create`). Excel/CSV ile müşteri listesini yükleyip kampanyayı çalıştırırsınız.',
       },
       {
         q: 'Sistem genel olarak nasıl çalışıyor?',
@@ -27,7 +27,7 @@ const SECTIONS = [
       },
       {
         q: 'Fiyatlandırma yapısı nasıldır?',
-        a: '**Başlangıç paketi (otomatik atanır)**: 10 TL/dakika, kullandıkça öde modeli. **İndirimli paketler**: 10.000 dk → 7 TL/dk, 30.000 dk → 5 TL/dk, 50.000 dk → 4 TL/dk, 100.000 dk → 3 TL/dk. Paket dakikanız bittiğinde aşım, otomatik olarak kredi bakiyenizden 10 TL/dk üzerinden tahsil edilir.',
+        a: '**Ücretsiz (otomatik atanır)**: 500 TL hoşgeldin kredisi, 10 TL/dakika kullandıkça öde. **İndirimli paketler**: Başlangıç 10.000 dk → 7 TL/dk (70.000₺), Popüler 30.000 dk → 5 TL/dk (150.000₺), Profesyonel 50.000 dk → 4 TL/dk (200.000₺). Paket dakikanız bittiğinde aşım, otomatik olarak kredi bakiyenizden 10 TL/dk üzerinden tahsil edilir.',
       },
     ],
   },
@@ -111,7 +111,7 @@ const SECTIONS = [
       },
       {
         q: 'Paket ile kredi arasındaki fark nedir?',
-        a: '**Paket**: Tek seferde dakika satın alırsınız (10K, 30K, 50K, 100K). İndirimli fiyatlandırma sunar. Kullandıkça aşağı düşer. **Kredi**: TL bakiyesi yüklersiniz. Dakika başına tahsil edilir (10 TL/dk). Daha esnek ancak fiyatı daha yüksektir. **Önerilen kullanım**: Yoğun arama yapacaksanız paket, düşük hacimli kullanım için kredi tercih edin.',
+        a: '**Paket**: Tek seferde dakika satın alırsınız (10K, 30K, 50K). İndirimli fiyatlandırma sunar. Kullandıkça aşağı düşer. **Kredi**: TL bakiyesi yüklersiniz. Dakika başına tahsil edilir (10 TL/dk). Daha esnek ancak fiyatı daha yüksektir. **Önerilen kullanım**: Yoğun arama yapacaksanız paket, düşük hacimli kullanım için kredi tercih edin.',
       },
       {
         q: 'Bakiyemi nasıl görüntülerim?',

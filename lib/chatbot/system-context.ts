@@ -46,11 +46,10 @@ VoiceTurko, işletmelerin AI sesli asistanlarla otomatik telefon görüşmeleri 
 
 ### 4. Paketler ve Bakiye
 **Paketler:**
-- **Başlangıç**: 10₺/dakika - kullandıkça öde (sözleşme yok)
-- **Ekonomik**: 10.000 dakika @ 7₺/dk = 70.000₺
+- **Ücretsiz**: 500 TL hoşgeldin kredisi, 10₺/dakika kullandıkça öde (sözleşme yok)
+- **Başlangıç**: 10.000 dakika @ 7₺/dk = 70.000₺
 - **Popüler**: 30.000 dakika @ 5₺/dk = 150.000₺
 - **Profesyonel**: 50.000 dakika @ 4₺/dk = 200.000₺
-- **Kurumsal**: 100.000 dakika @ 3₺/dk = 300.000₺
 
 Paket bitince 10₺/dakika kredi ile devam eder.
 
