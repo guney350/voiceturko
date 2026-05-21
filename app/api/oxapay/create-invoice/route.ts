@@ -79,7 +79,7 @@ export async function POST(request: Request) {
       currency: 'TRY',
       orderId: paymentIntent.id,
       description,
-      callbackUrl: `${appUrl}/api/oxapay/webhook`,
+      callbackUrl: 'https://caventrallc.com/api/voiceturko/oxapay/webhook',
       returnUrl: purpose === 'package'
         ? `${appUrl}/dashboard/packages?success=true`
         : `${appUrl}/dashboard/credits?success=true`,
